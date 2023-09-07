@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using SellWebsite.DataAccess.Reponsitory.IReponsitory;
 using SellWebsite.Models.Models;
@@ -30,9 +31,17 @@ namespace SellWebsite.Areas.Customer.Controllers
                 ListOrderHeader = new List<OrderHeader>()
             };
 
-            YourOrderVM.ListOrderHeader = _unitOfWork.OrderHeader.GetAll(includes: p => p.ApplicationUser, filter: p => p.ApplicationUserId == userId).ToList();
+            YourOrderVM.ListOrderHeader = _unitOfWork.OrderHeader.GetAll(filter: p => p.ApplicationUserId == userId,
+                includes: p => p.ApplicationUser
+                ).Include(p => p.Company).ToList();
 
             return View(YourOrderVM);
+        }
+
+        public IActionResult Details(int idOrder)
+        {
+            List<OrderDetail> orderDetails = _unitOfWork.OrderDetail.GetAll(filter: p => p.OrderHeaderId == idOrder, includes: p => p.Product).ToList();
+            return View(orderDetails);
         }
 
         #region API Call

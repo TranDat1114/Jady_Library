@@ -1,13 +1,12 @@
 ﻿
 $(document).ready(function () {
     loadDataTable();
-    console.log("helo");
 });
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": { url: '/admin/order/getall' },
         "columns": [
-            { data: 'orderId' },
+            { data: 'orderHeaderId' },
             { data: 'name' },
             { data: 'email' },
             { data: 'phoneNumber' },
@@ -32,17 +31,17 @@ function loadDataTable() {
                 }
             },
             {
-                data: 'orderId',
+                data: 'orderHeaderId',
                 "render": function (data) {
                     return `
                     <td>
-                        <a href="/admin/order/GetOrderDetail?idOrder=${data}" class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Details</a>
+                        <a href="/admin/order/Details?idOrder=${data}" class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Details</a>
                     </td>                  
                         `
                 }
             },
             {
-                data: 'orderId',
+                data: 'orderHeaderId',
                 "render": function (data) {
                     return `
                     <td>
@@ -52,7 +51,7 @@ function loadDataTable() {
                 }
             },
             {
-                data: 'orderId',
+                data: 'orderHeaderId',
                 "render": function (data) {
                     return `
                    <td>

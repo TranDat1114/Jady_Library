@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 namespace SellWebsite.Models.Models
 {
     public class Company
@@ -13,5 +15,8 @@ namespace SellWebsite.Models.Models
         public string? PhoneNumber { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
+
+        [ValidateNever]
+        public List<OrderHeader> OrderHeaders { get; set; } = new List<OrderHeader>();
     }
 }

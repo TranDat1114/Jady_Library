@@ -1,17 +1,75 @@
 ﻿@model YourOrderVM
 
-
-<div class="container-fluid">
-    <h2>Borrow book history</h2>
+<div class="container">
     <div class="row">
-        @foreach (var item in Model.ListOrderHeader)
-        {
-            <div class="col-6">
-                @item.OrderTime
-                @item.ReturnTime
-                @item.IsReturn
-                @item.OrderStatus
-            </div>
-        }
+        <div class="col-12 col-md-6">
+            <h2>Borrow list book</h2>
+        </div>
+        <div class="col-12 col-md-6 text-end">
+            @*<a class="btn btn-primary" asp-controller="Company" asp-action="Upsert">
+            <i class="bi bi-plus-circle"></i> Create new company
+            </a>*@
+        </div>
+    </div>
+</div>
+<div class="mt-5 container-fluid">
+    <div class="row">
+        <table id="tblData" class="table table-striped scroll-table w-100">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th class="text-nowrap">
+                        Company Name
+                    </th>
+                    <th class="text-nowrap">
+                        Order Time
+                    </th>
+                    <th class="text-nowrap">
+                        Order Status
+                    </th>
+                    <th class="text-nowrap">
+                        ReturnTime
+                    </th>
+                    <th class="text-nowrap">
+                        IsReturn
+                    </th>
+                    <th class="text-nowrap">
+                        Detail
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListOrderHeader)
+                {
+                    <tr>
+                        <td>
+                            @item.OrderHeaderId
+                        </td>
+                        <td>
+                            @item.Company.Name
+                        </td>
+                        <td>
+                            @item.OrderTime
+                        </td>
+                        <td>
+                            @item.OrderStatus
+                        </td>
+                        <td>
+                            @item.ReturnTime
+                        </td>
+                        <td>
+                            @item.IsReturn
+                        </td>
+                        <td>
+                            <a class="btn btn-primary text-nowrap w-100" asp-area="Customer" asp-controller="YourOrder" asp-action="Details" asp-route-idOrder="@item.OrderHeaderId">Detail</a>
+                        </td>
+                       
+                    </tr>
+                   
+                }
+            </tbody>
+        </table>
     </div>
 </div>

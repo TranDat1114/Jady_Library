@@ -133,7 +133,8 @@ namespace SellWebsite.Areas.Customer.Controllers
                     //
                     ShoppingCartVM.OrderHeader.ReturnTime = DateTime.Now.AddDays(7);
                     ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
-                    //ShoppingCartVM.OrderHeader.Company = _unitOfWork.Company.Get(filter: p => p.CompanyId == ShoppingCartVM.OrderHeader.CompanyId);
+
+                    ShoppingCartVM.OrderHeader.Company = _unitOfWork.Company.Get(filter: p => p.CompanyId == ShoppingCartVM.OrderHeader.CompanyId);
 
                     _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
                     _unitOfWork.Save();

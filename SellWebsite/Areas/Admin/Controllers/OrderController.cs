@@ -24,6 +24,12 @@ namespace SellWebsite.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult Details(int idOrder)
+        {
+            List<OrderDetail> orderDetails = _unitOfWork.OrderDetail.GetAll(filter: p => p.OrderHeaderId == idOrder, includes: p => p.Product).ToList();
+            return View(orderDetails);
+        }
+
         #region API Call
         [HttpGet]
         public IActionResult GetAll()
