@@ -12,7 +12,7 @@ using SellWebsite.DataAccess.Data;
 namespace SellWebsite.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230906233412_demo_1")]
+    [Migration("20230907090140_demo_1")]
     partial class demo_1
     {
         /// <inheritdoc />
@@ -27,15 +27,15 @@ namespace SellWebsite.DataAccess.Migrations
 
             modelBuilder.Entity("CategoryProduct", b =>
                 {
-                    b.Property<int>("CategoriesId")
+                    b.Property<int>("CategoriesCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsId")
+                    b.Property<int>("ProductsProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("CategoriesId", "ProductsId");
+                    b.HasKey("CategoriesCategoryId", "ProductsProductId");
 
-                    b.HasIndex("ProductsId");
+                    b.HasIndex("ProductsProductId");
 
                     b.ToTable("CategoryProduct", (string)null);
                 });
@@ -248,12 +248,12 @@ namespace SellWebsite.DataAccess.Migrations
 
             modelBuilder.Entity("SellWebsite.Models.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("CategoryId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(2048)
@@ -266,18 +266,18 @@ namespace SellWebsite.DataAccess.Migrations
                         .HasColumnType("varchar(128)")
                         .HasColumnName("CategoryName");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Catagories");
                 });
 
             modelBuilder.Entity("SellWebsite.Models.Models.Company", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CompanyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyId"));
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -292,18 +292,18 @@ namespace SellWebsite.DataAccess.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CompanyId");
 
                     b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("SellWebsite.Models.Models.OrderDetail", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderDetailId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -317,7 +317,7 @@ namespace SellWebsite.DataAccess.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderDetailId");
 
                     b.HasIndex("OrderHeaderId");
 
@@ -328,11 +328,11 @@ namespace SellWebsite.DataAccess.Migrations
 
             modelBuilder.Entity("SellWebsite.Models.Models.OrderHeader", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderHeaderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderHeaderId"));
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
@@ -363,7 +363,7 @@ namespace SellWebsite.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderHeaderId");
 
                     b.HasIndex("ApplicationUserId");
 
@@ -374,12 +374,12 @@ namespace SellWebsite.DataAccess.Migrations
 
             modelBuilder.Entity("SellWebsite.Models.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ProductId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -417,7 +417,7 @@ namespace SellWebsite.DataAccess.Migrations
                         .HasColumnName("ProductUpdatedDate")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.ToTable("Products");
                 });
@@ -507,13 +507,13 @@ namespace SellWebsite.DataAccess.Migrations
                 {
                     b.HasOne("SellWebsite.Models.Models.Category", null)
                         .WithMany()
-                        .HasForeignKey("CategoriesId")
+                        .HasForeignKey("CategoriesCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SellWebsite.Models.Models.Product", null)
                         .WithMany()
-                        .HasForeignKey("ProductsId")
+                        .HasForeignKey("ProductsProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -597,7 +597,7 @@ namespace SellWebsite.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("SellWebsite.Models.Models.Company", "Company")
-                        .WithMany()
+                        .WithMany("OrderHeaders")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -643,6 +643,11 @@ namespace SellWebsite.DataAccess.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("SellWebsite.Models.Models.Company", b =>
+                {
+                    b.Navigation("OrderHeaders");
                 });
 
             modelBuilder.Entity("SellWebsite.Models.Models.OrderHeader", b =>

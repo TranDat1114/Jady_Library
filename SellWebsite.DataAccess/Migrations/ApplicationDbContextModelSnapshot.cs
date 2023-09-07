@@ -594,7 +594,7 @@ namespace SellWebsite.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("SellWebsite.Models.Models.Company", "Company")
-                        .WithMany()
+                        .WithMany("OrderHeaders")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -640,6 +640,11 @@ namespace SellWebsite.DataAccess.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("SellWebsite.Models.Models.Company", b =>
+                {
+                    b.Navigation("OrderHeaders");
                 });
 
             modelBuilder.Entity("SellWebsite.Models.Models.OrderHeader", b =>

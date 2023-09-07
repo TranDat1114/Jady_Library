@@ -75,7 +75,7 @@ namespace SellWebsite.DataAccess.Migrations
                 name: "Companies",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    CompanyId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -84,7 +84,7 @@ namespace SellWebsite.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Companies", x => x.Id);
+                    table.PrimaryKey("PK_Companies", x => x.CompanyId);
                 });
 
             migrationBuilder.CreateTable(
@@ -215,7 +215,7 @@ namespace SellWebsite.DataAccess.Migrations
                 name: "OrderHeaders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    OrderHeaderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     OrderTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -229,7 +229,7 @@ namespace SellWebsite.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderHeaders", x => x.Id);
+                    table.PrimaryKey("PK_OrderHeaders", x => x.OrderHeaderId);
                     table.ForeignKey(
                         name: "FK_OrderHeaders_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
@@ -240,7 +240,7 @@ namespace SellWebsite.DataAccess.Migrations
                         name: "FK_OrderHeaders_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id",
+                        principalColumn: "CompanyId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -248,21 +248,21 @@ namespace SellWebsite.DataAccess.Migrations
                 name: "CategoryProduct",
                 columns: table => new
                 {
-                    CategoriesId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                    CategoriesCategoryId = table.Column<int>(type: "int", nullable: false),
+                    ProductsProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoryProduct", x => new { x.CategoriesId, x.ProductsId });
+                    table.PrimaryKey("PK_CategoryProduct", x => new { x.CategoriesCategoryId, x.ProductsProductId });
                     table.ForeignKey(
-                        name: "FK_CategoryProduct_Catagories_CategoriesId",
-                        column: x => x.CategoriesId,
+                        name: "FK_CategoryProduct_Catagories_CategoriesCategoryId",
+                        column: x => x.CategoriesCategoryId,
                         principalTable: "Catagories",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CategoryProduct_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_CategoryProduct_Products_ProductsProductId",
+                        column: x => x.ProductsProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
@@ -285,7 +285,7 @@ namespace SellWebsite.DataAccess.Migrations
                         name: "FK_ProductInCompanies_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id",
+                        principalColumn: "CompanyId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductInCompanies_Products_ProductId",
@@ -326,7 +326,7 @@ namespace SellWebsite.DataAccess.Migrations
                 name: "OrderDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    OrderDetailId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderHeaderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -335,12 +335,12 @@ namespace SellWebsite.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetails", x => x.Id);
+                    table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailId);
                     table.ForeignKey(
                         name: "FK_OrderDetails_OrderHeaders_OrderHeaderId",
                         column: x => x.OrderHeaderId,
                         principalTable: "OrderHeaders",
-                        principalColumn: "Id",
+                        principalColumn: "OrderHeaderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderDetails_Products_ProductId",
@@ -390,9 +390,9 @@ namespace SellWebsite.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryProduct_ProductsId",
+                name: "IX_CategoryProduct_ProductsProductId",
                 table: "CategoryProduct",
-                column: "ProductsId");
+                column: "ProductsProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderHeaderId",

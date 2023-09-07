@@ -38,6 +38,9 @@
                     <th class="text-nowrap">
                         Detail
                     </th>
+                    <th class="text-nowrap">
+                        Detail
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +68,9 @@
                         <td>
                             <a class="btn btn-primary text-nowrap w-100" asp-area="Customer" asp-controller="YourOrder" asp-action="Details" asp-route-idOrder="@item.OrderHeaderId">Detail</a>
                         </td>
-                       
+                        <td>
+                            <a class="btn btn-primary text-nowrap w-100" asp-area="Customer" asp-controller="YourOrder" asp-action="Details" asp-route-idOrder="@item.OrderHeaderId">Extend</a>
+                        </td>
                     </tr>
                    
                 }

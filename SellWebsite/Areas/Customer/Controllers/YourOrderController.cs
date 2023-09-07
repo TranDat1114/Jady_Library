@@ -38,6 +38,7 @@ namespace SellWebsite.Areas.Customer.Controllers
             return View(YourOrderVM);
         }
 
+
         public IActionResult Details(int idOrder)
         {
             List<OrderDetail> orderDetails = _unitOfWork.OrderDetail.GetAll(filter: p => p.OrderHeaderId == idOrder, includes: p => p.Product).ToList();
@@ -62,6 +63,17 @@ namespace SellWebsite.Areas.Customer.Controllers
             List<OrderDetail> orderDetails = _unitOfWork.OrderDetail.GetAll(filter: p => p.OrderHeaderId == idOrder, includes: p => p.Product).ToList();
             return Json(new { data = orderDetails });
         }
+
+
+        public IActionResult Extend(int? id)
+        {
+            var product = _unitOfWork.Product.Get(u => u.ProductId == id);
+
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Waiting Extend Request" });
+        }
+
         #endregion
     }
 }
