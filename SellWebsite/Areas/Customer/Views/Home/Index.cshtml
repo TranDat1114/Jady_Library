@@ -3,35 +3,18 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+@*
 <!-- Header -->
 <header id="header" class="header">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 col-xl-5">
-                <div class="text-container">
-                    <div class="section-title">Welcome to JADY web agency</div>
-                    <h1 class="h1-large text-success">Grad up to 75% off on website</h1>
-                    <a class="btn-solid-lg" href="#services">Offered services</a>
-                    <a class="quote" href="#contact"><i class="fas fa-paper-plane"></i>Get quote</a>
-                </div> <!-- end of text-container -->
-            </div> <!-- end of col -->
-            <div class="col-lg-6 col-xl-7">
-                <div class="image-container">
-                    <lottie-player class="w-100" src="https://assets1.lottiefiles.com/packages/lf20_aesgckiv.json" background="transparent" speed="1" loop autoplay></lottie-player>
-                    @*<img  src="~/assets/Images/TemplateIMG/header-illustration.svg" alt="alternative">*@
-                </div> <!-- end of image-container -->
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
+
 </header> <!-- end of header -->
 <!-- end of header -->
-<!-- Projects -->
+<!-- Projects -->*@
 <div id="projects" class="filter bg-gray">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="h2-heading">Website for you</h2>
+                <h2 class="h2-heading">Jady Library</h2>
             </div> <!-- end of col -->
         </div> <!-- end of row -->
         <div class="row">
@@ -44,17 +27,16 @@
                         <button class="button" data-filter=".@item.Name">@item.Name</button>
                     }
                 </div> <!-- end of button group -->
-                <div class="grid gap-3">
+                <div class="row row-cols-1 row-cols-lg-5 row-cols-md-2 justify-content-center align-items-center">
                     @foreach (var item in Model?.Products!)
                     {
-                        <div class="element-item @(string.Join(" ",item?.Categories?.Select(p=>p.Name)!))">
+                        <div class="element-item col @(string.Join(" ",item?.Categories?.Select(p=>p.Name)!))">
                             <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@item?.ProductId">
-                                <img style="height:200px; object-fit:cover" class="w-100" src="@item?.Image" alt="alternative">
+                                <img style="height:450px; object-fit:cover" class="w-100" src="@item?.Image" alt="alternative">
                                 <div class="d-flex justify-content-between">
                                     <p><strong>@item?.Title</strong>
-                                     </div>
+                                </div>
                             </a>
-                            
 
                             <div class="d-flex justify-content-evenly">
                                 <a class="btn btn-primary btn-sm" asp-area="Customer" asp-controller="Preview" asp-action="Index" asp-route-id="@item?.ProductId">Live Preview</a>
@@ -71,3 +53,14 @@
 </div> <!-- end of filter -->
 <!-- end of projects -->
 <!-- Invitation -->
+<div class="container">
+    <div class="row align-items-center">
+
+        <div class="col-lg-12">
+            <div class="image-container">
+                <lottie-player class="w-100" src="https://assets1.lottiefiles.com/packages/lf20_aesgckiv.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                @*<img  src="~/assets/Images/TemplateIMG/header-illustration.svg" alt="alternative">*@
+            </div> <!-- end of image-container -->
+        </div> <!-- end of col -->
+    </div> <!-- end of row -->
+</div> <!-- end of container -->
