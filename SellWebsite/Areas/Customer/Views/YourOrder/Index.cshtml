@@ -1,0 +1,17 @@
+﻿@model YourOrderVM
+
+
+<div class="container-fluid">
+    <h2>Borrow book history</h2>
+    <div class="row">
+        @foreach (var item in Model.ListOrderHeader)
+        {
+            <div class="col-6">
+                @item.OrderTime
+                @item.ReturnTime
+                @item.IsReturn
+                @item.OrderStatus
+            </div>
+        }
+    </div>
+</div>

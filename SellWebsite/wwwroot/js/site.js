@@ -1,0 +1,3 @@
+﻿
+//My Script
+var dataTable;

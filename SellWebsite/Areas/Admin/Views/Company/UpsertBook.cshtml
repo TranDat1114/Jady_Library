@@ -1,0 +1,61 @@
+﻿@using SellWebsite.Models.ViewModels.Customer;
+@model UpsertBookVM
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="border p-3 mt-4">
+            <div class="row pb-2">
+                <h2 class="text-primary">@(Model.ProductInCompany.ProductInCompanyId != 0 ? "Update" : "Create") Amen</h2>
+            </div>
+
+            <div asp-validation-summary="All"></div>
+
+            <div class="mb-3 row">
+                <div class="col-12 col-md-6">
+                    <label asp-for="ProductInCompany.CompanyId"></label>
+                    <input style="width:150px" class="form-control" readonly asp-for="ProductInCompany.CompanyId" />
+                </div>
+                <div class="col-12 col-md-6">
+                    <label asp-for="ProductInCompany.ProductInCompanyId"></label>
+                    <input style="width:150px" class="form-control" readonly asp-for="ProductInCompany.ProductInCompanyId" />
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <div class="mb-3 row">
+                    <select asp-for="ProductInCompany.ProductId" class="form-control" asp-items="@(new SelectList(Model.ListProduct, nameof(Product.ProductId), nameof(Product.Title)))"></select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label asp-for="ProductInCompany.Quantity"></label>
+                    <input class="form-control" type="text" asp-for="ProductInCompany.Quantity" placeholder="Input Category Name" />
+                    <span class="text-danger" asp-validation-for="ProductInCompany.Quantity"></span>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-6 col-md-3">
+                    @if (Model.ProductInCompany.ProductInCompanyId != 0)
+                    {
+                        <button class="btn btn-primary form-control" type="submit">Update</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary form-control" type="submit">Create</button>
+                    }
+                </div>
+                <div class="col-6 col-md-3">
+                    <a class="btn btn-outline-secondary border form-control" asp-controller="Company" asp-action="Details" asp-route-id="@Model.ProductInCompany.CompanyId">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts
+    {
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

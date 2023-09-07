@@ -1,0 +1,76 @@
+﻿@using SellWebsite.Models.ViewModels.Customer;
+@model DetailCompanyVM;
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h2 class="text-primary">
+                Company Name: @Model.CompanyName
+            </h2>
+        </div>
+        <div class="col-12 col-md-6 text-end">
+            <a class="btn btn-primary" asp-controller="Company" asp-action="UpsertBook" asp-route-companyId="@Model.CompanyId">
+                <i class="bi bi-plus-circle"></i> Add Book
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5 container-fluid">
+    <div class="row">
+
+        <table id="tblData" class="table table-striped scroll-table w-100">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th class="text-nowrap">
+                        Title
+                    </th>
+                    <th class="text-nowrap">
+                        Image
+                    </th>
+                    <th class="text-nowrap">
+                        Quantity
+                    </th>
+                    <th class="text-nowrap">
+                        Edit
+                    </th>
+                    <th class="text-nowrap">
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListProductInCompany)
+                {
+                    <tr>
+                        <td>
+                            @item.ProductInCompanyId
+                        </td>
+                        <td>
+                            @item.Product.Title
+                        </td>
+                        <td>
+                            <img class="img-table" src="@item.Product.Image" alt="img" />
+                        </td>
+                        <td>
+                            @item.Quantity
+                        </td>
+                        <td>
+                            <a asp-controller="Company" asp-action="UpsertBook" asp-route-companyId="@Model.CompanyId" asp-route-id="@item.ProductInCompanyId" class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Edit</a>
+                        </td>
+                        <td>
+                            <button onClick=DeleteBook(@($"'/admin/company/deletebook?id={item.ProductInCompanyId}'")) class="btn btn-danger text-nowrap w-100"><i class="bi bi-trash3-fill"></i> Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js//DeleteByAPI.js"></script>
+}

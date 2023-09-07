@@ -1,0 +1,189 @@
+﻿@using System.Globalization;
+@model ShoppingCartVM
+<div class="container-fluid">
+    <h2>Shopping Cart</h2>
+    <div class="row">
+        <div class="col-12 col-md-9 border-end border-2">
+            <table class="table tabletable-hover scroll-table">
+                <thead>
+                    <tr>
+                        @*<th class="text-nowrap"><input class="form-check-input" type="checkbox" /></th>*@
+                        <th class="text-nowrap">All Items</th>
+                        <th class="text-nowrap">Item Name</th>
+                        <th class="text-nowrap">Unit price</th>
+                        <th class="text-nowrap">Quantity</th>
+                        <th class="text-nowrap">Total</th>
+                        <th class="text-nowrap"></th>
+                    </tr>
+                </thead>
+                @if (Model.Carts != null && Model.Carts.Count != 0)
+                {
+                    <tbody>
+                        @foreach (var item in @Model.Carts)
+                        {
+                            <tr>
+                                @*<td><input class="form-check-input" type="checkbox" /></td>*@
+                                <td><img class="img-table" src="@item.Product.Image" alt="product"> </td>
+                                <td class="text-truncate">@item.Product.Title</td>
+
+                                <td class="text-center" style="width:250px">
+                                    @*nếu là web thì không cộng trừ*@
+                                    <div class="input-group">
+                                        <a class="input-group-text text-decoration-none" asp-controller="ShoppingCart" asp-action="Minus" asp-route-cartId="@item.CartId" asp-route-productId="@item.ProductId"><i class="fa-solid fa-minus"></i></a>
+                                        <input class="form-control" asp-for="@item.Quantity" value="@item.Quantity" readonly type="number" />
+                                        <a class="input-group-text text-decoration-none"
+                                           asp-controller="ShoppingCart" asp-action="Plus" asp-route-cartId="@item.CartId" asp-route-productId="@item.ProductId"><i class="fa-solid fa-plus"></i></a>
+                                    </div>
+                                </td>
+
+                                <td><a class="btn btn-sm btn-outline-danger" asp-controller="ShoppingCart" asp-action="Remove" asp-route-cartId="@item.CartId" asp-route-productId="@item.ProductId"><i class="fa-solid fa-xmark"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center"><h4>0 Product in your cart</h4></td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="container">
+
+                <div class="row g-3">
+                    <div class="col-12 d-flex justify-content-between">
+                        <h5>Voucher</h5>
+                        <p class="text-dark">Choice 1 <i class="fa-solid fa-circle-info"></i></p>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-info w-100"><i class="fa-solid fa-percent"></i> Coupon</button>
+                    </div>
+                </div>
+                <hr />
+                @*Sửa lại khi cần thiết*@
+                <div class="row">
+                    <div class="col-12 d-flex g-3 justify-content-between">
+                        <p class="fw-bold">Provisional price: </p>
+
+                    </div>
+                    <div class="col-12 d-flex g-3 justify-content-between">
+                        <p class="fw-bold">Discount: </p>
+
+                    </div>
+                    <hr />
+                    <div class="col-12 d-flex g-3 justify-content-between">
+                        <p class="fw-bold">Total price: </p>
+
+                    </div>
+                </div>
+                <hr />
+                <div class="row g-3">
+                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#checkOutPayment">Purchase</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="checkOutPayment" tabindex="-1" aria-hidden="true">
+    <div class="modal-xl modal-dialog modal-fullscreen-md-down max-h-90 mt-5">
+        <form class="modal-content" method="post">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Summary your order details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-8 border-end border-2">
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="OrderHeader.Name" class="form-label">Your Name</label>
+                                    <input asp-for="OrderHeader.Name" type="text" class="form-control" placeholder="Input your name...">
+                                    <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="OrderHeader.PhoneNumber">Phone Number</label>
+                                    <input class="form-control" type="text" asp-for="OrderHeader.PhoneNumber" placeholder="Input phone number..." />
+                                    <span class="text-danger" asp-validation-for="OrderHeader.PhoneNumber"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="OrderHeader.CompanyId"></label>
+                                    <select asp-for="OrderHeader.CompanyId" class="form-control" asp-items="@(new SelectList(Model.Companies, nameof(Company.CompanyId), nameof(Company.Name)))"></select>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label asp-for="OrderHeader.Email"></label>
+                                    <input class="form-control" type="text" asp-for="OrderHeader.Email" placeholder="Input Email..." />
+                                    <span class="text-danger" asp-validation-for="OrderHeader.Email"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-lg-between">
+                                        <p class="fw-bold">Order</p>
+                                        <p>Price x Quantity</p>
+                                    </div>
+                                    <hr />
+                                    <div class="container scoll-able-modal">
+                                        @if (Model.Carts != null && Model.Carts.Count != 0)
+                                        {
+                                            @foreach (var cart in @Model.Carts)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <p class="fw-bold">@cart.Product.Title</p>
+                                                        <p class="text-muted text-light">x @cart.Quantity</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                    </div>
+                                                </div>
+                                                <hr class="mx-auto w-50" />
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="w-100" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between ">
+                <div class="row align-items-center w-100">
+                    <div class="col-12 col-md-8">
+                        <p class="text-start text-nowrap text-info">
+                            Borrow Time: @DateTime.Now.ToShortDateString() - @DateTime.Now.AddDays(7).ToShortDateString()
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-4 ">
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-primary">Place Order</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+@section Scripts
+    {
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

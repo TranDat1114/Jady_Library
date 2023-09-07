@@ -1,0 +1,286 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using Newtonsoft.Json;
+@using SellWebsite.DataAccess.Data;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor IHttpContextAccessor
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Your description">
+    <meta name="author" content="JayAndy-DatTran">
+
+    <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+    <meta property="og:site_name" content="" /> <!-- website name -->
+    <meta property="og:site" content="" /> <!-- website link -->
+    <meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+    <meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+    <meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+    <meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+    <!-- Webpage Title -->
+    <title>@ViewData["Title"] - SellWebsite</title>
+
+
+    <!-- Favicon  -->
+    <link rel="icon" href="~/favicon.ico">
+
+    <!--Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Quicksand:wght@500&display=swap"
+          rel="stylesheet">
+
+    <!-- Styles -->
+    <script src="https://kit.fontawesome.com/4552defb60.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tiny.cloud/1/y07btutcpwdzswao1xm5ps6m0l90919xay5fmsmylhv1s0kr/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"></script>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <script src="https://unpkg.com/@@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+    <link href="~/css/Template_Css/swiper.css" rel="stylesheet">
+    <link href="~/css/Template_Css/styles.css" rel="stylesheet">
+
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbarExample">
+    <!-- Navigation -->
+    <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light"
+         aria-label="Main navigation align-items-center">
+        <div class="container-fluid">
+
+            <!-- Image Logo -->
+            @*<a class="navbar-brand logo-image" href="index.html"><img src="~/assets/Images/TemplateIMG/logo.svg"
+            alt="alternative"></a> *@
+
+            <!-- Text Logo - Use this if you don't have a graphic logo -->
+            <!-- <a class="navbar-brand logo-text" href="index.html">Zinc</a> -->
+            <a class="mx-3 navbar-brand logo-text" asp-area="Customer" asp-controller="Home" asp-action="Index">JADY</a>
+
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav navbar-nav-scroll align-items-center ms-2">
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Boss) || User.IsInRole(SD.Role_Employee))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                               aria-expanded="false">Management</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Product"
+                                       asp-action="Index">Product Management</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category"
+                                       asp-action="Index">Category Management</a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Order"
+                                       asp-action="Index">Order Management</a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Boss))
+                                {
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Company"
+                                           asp-action="Index">Company Management</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="ApplicationUser"
+                                           asp-action="Index">User Management</a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">
+                                            Create
+                                            User
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+
+                        </li>
+                    }
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+                           aria-expanded="false">Categories</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown01" id="category-list">
+                        </ul>
+                    </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {                    
+                    <li class="nav-item">
+                            <a class="nav-link" asp-controller="YourOrder"
+                               asp-action="Index">Your Order</a>
+                    </li>
+                    }
+                    <li class="nav-item dropdown">
+                        <div class="input-group search-input-group">
+                            <input class="form-control" type="text" id="searchInput"
+                                   placeholder="Search product name..." />
+                            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        </div>
+                        <ul class="dropdown-menu w-100" id="searchResults">
+                            <li>
+                                <div class="dropdown-item">
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto navbar-nav-scroll align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" asp-area="Customer" asp-controller="ShoppingCart"
+                           asp-action="Index">
+                            @await Component.InvokeAsync("ShoppingCart")
+                        </a>
+                    </li>
+
+                    <li class="nav-item me-0">
+                        <partial name="_LoginPartial">
+                    </li>
+                </ul>
+
+            </div> <!-- end of navbar-collapse -->
+        </div> <!-- end of container -->
+    </nav> <!-- end of navbar -->
+    <!-- end of navigation -->
+
+    <div id="body" class="container-fluid p-8rem">
+        <div class="row">
+            <div class="col-12">
+                <main class="mx-5" role="main">
+                    @{
+                        <partial name="_Notification" />
+                    }
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footerPreview">
+        <div class="footer bg-gray">
+            <img class="decoration-city" src="~/assets/Images/TemplateIMG/decoration-city.svg" alt="alternative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>
+                            
+                        </h4>
+                        <div class="social-container">
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-facebook-f fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-twitter fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-pinterest-p fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-instagram fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-youtube fa-stack-1x"></i>
+                                </a>
+                            </span>
+                        </div> <!-- end of social-container -->
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of footer -->
+        <!-- end of footer -->
+        <!-- Copyright -->
+        <div class="copyright bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled li-space-lg p-small">
+                            <li><a href="article.html">Article Details</a></li>
+                            <li><a href="terms.html">Terms & Conditions</a></li>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div> <!-- end of col -->
+                    <div class="col-lg-3">
+                        <p class="p-small statement">Copyright © <a href="#">Tran Phu Dat</a></p>
+                    </div> <!-- end of col -->
+                    <div class="col-lg-3">
+                        <p class="p-small statement">
+                            Distributed By: <a href="https://www.linkedin.com/in/tran-phu-dat-526a82288/"
+                                               target="_blank">Tran Phu Dat</a>
+                        </p>
+                    </div> <!-- end of col -->
+                </div> <!-- enf of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of copyright -->
+        <!-- end of copyright -->
+
+    </div>
+
+    <!-- Back To Top Button -->
+    <button onclick="topFunction()" id="myBtn">
+        <img src="~/assets/Images/TemplateIMG/up-arrow.png" alt="alternative">
+    </button>
+    <!-- end of back to top button -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/Template_js/swiper.min.js"></script> <!-- Swiper for image and text sliders -->
+    <script src="~/js/Template_js/purecounter.min.js"></script> <!-- Purecounter counter for statistics numbers -->
+    <script src="~/js/Template_js/isotope.pkgd.min.js"></script> <!-- Isotope for filter -->
+    <script src="~/js/Template_js/scripts.js"></script> <!-- Custom scripts -->
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/getCategoriesName.js" asp-append-version="true"></script>
+    <script src="~/js/searchProduct.js" asp-append-version="true"></script>
+    <script src="~/js/changeIconStartReview.js" asp-append-version="true"></script>
+
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
