@@ -64,14 +64,23 @@ namespace SellWebsite.Areas.Customer.Controllers
             return Json(new { data = orderDetails });
         }
 
-
-        public IActionResult Extend(int? id)
+        public IActionResult Extend(int? idOrder)
         {
-            var product = _unitOfWork.Product.Get(u => u.ProductId == id);
+            var orderInfor = _unitOfWork.OrderHeader.Get(u => u.OrderHeaderId == idOrder);
+            if (orderInfor.OrderTime.AddDays(14) < orderInfor.ReturnTime)
+            {
+                TempData["error"] = $"Your extend request failed cause limit time extend";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                orderInfor.ReturnTime = orderInfor.ReturnTime.AddDays(7);
+            }
 
             _unitOfWork.Save();
+            TempData["success"] = $"Your extend request successfully";
 
-            return Json(new { success = true, message = "Waiting Extend Request" });
+            return RedirectToAction(nameof(Index));
         }
 
         #endregion

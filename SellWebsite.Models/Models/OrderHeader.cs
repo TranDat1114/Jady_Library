@@ -19,7 +19,7 @@ namespace SellWebsite.Models.Models
         public DateTime OrderTime { get; set; }
         [Required]
         [DataType(DataType.Date)]
-        public DateTime? ReturnTime { get; set; }
+        public DateTime ReturnTime { get; set; }
 
         public bool IsReturn { get; set; } = false;
         //public double OrderTotal { get; set; }
