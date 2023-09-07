@@ -32,7 +32,7 @@
                     {
                         <div class="element-item col @(string.Join(" ",item?.Categories?.Select(p=>p.Name)!))">
                             <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@item?.ProductId">
-                                <img style="height:450px; object-fit:cover" class="w-100" src="@item?.Image" alt="alternative">
+                                <img style="height:400px; object-fit:cover" class="w-100" src="@item?.Image" alt="alternative">
                                 <div class="d-flex justify-content-between">
                                     <p><strong>@item?.Title</strong>
                                 </div>
