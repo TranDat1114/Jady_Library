@@ -112,6 +112,11 @@ namespace SellWebsite.Areas.Customer.Controllers
                             dictionKeyError.Add(products.Product.Title, $"{products.Quantity}");
                         }
                     }
+                    else
+                    {
+                        TempData["error"] = $"{cart.Product.Title} does not exist in this library";
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
                 if (dictionKeyError.Count() == 0)
                 {
@@ -161,7 +166,7 @@ namespace SellWebsite.Areas.Customer.Controllers
                     string ShowError = "";
                     foreach (var item in dictionKeyError)
                     {
-                        ShowError += $"{item.Key} Only {item.Value} . left <br/>";
+                        ShowError += $"{item.Key} Only {item.Value} . left\n";
                     }
                     TempData["error"] = ShowError;
                 }

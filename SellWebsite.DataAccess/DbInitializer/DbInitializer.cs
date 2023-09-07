@@ -232,6 +232,34 @@ namespace SellWebsite.DataAccess.DbInitializer
                 _db.Products.AddRangeAsync(products).GetAwaiter().GetResult();
                 _db.SaveChangesAsync().GetAwaiter().GetResult();
 
+                var listProductInCompany = new List<ProductInCompany>()
+                {
+                    new ProductInCompany()
+                    {
+                        CompanyId=1,
+                        ProductId=2,
+                        Quantity = 3,
+                    },
+                    new ProductInCompany()
+                    {
+                        CompanyId=1,
+                        ProductId=3,
+                        Quantity = 5,
+                    },
+                    new ProductInCompany()
+                    {
+                        CompanyId=2,
+                        ProductId=3,
+                        Quantity = 10,
+                    }                    ,
+                    new ProductInCompany()
+                    {
+                        CompanyId=3,
+                        ProductId=5,
+                        Quantity = 20,
+                    }
+                };
+
             }
             return;
         }
