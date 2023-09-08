@@ -14,7 +14,7 @@ function Rejected(Url) {
                 url: Url,
                 type: 'Put',
                 success: (data) => {
-                    dataTable.ajax.reload();
+                    $('#tblData').DataTable().ajax.reload();
                     toastr.success(data.message);
                 }
             })
@@ -38,7 +38,7 @@ function Approve(Url) {
                 url: Url,
                 type: 'Put',
                 success: (data) => {
-                    dataTable.ajax.reload();
+                    $('#tblData').DataTable().ajax.reload();
                     toastr.success(data.message);
                 }
             })
@@ -62,7 +62,7 @@ function Returned(Url) {
                 url: Url,
                 type: 'Put',
                 success: (data) => {
-                    dataTable.ajax.reload();
+                    $('#tblData').DataTable().ajax.reload();
                     toastr.success(data.message);
                 }
             })
