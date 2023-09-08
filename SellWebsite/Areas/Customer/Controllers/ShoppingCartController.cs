@@ -134,7 +134,6 @@ namespace SellWebsite.Areas.Customer.Controllers
                     }
 
                     ShoppingCartVM.OrderHeader.ApplicationUser = userData;
-                    ShoppingCartVM.OrderHeader.IsReturn = false;
                     //
                     ShoppingCartVM.OrderHeader.ReturnTime = DateTime.Now.AddDays(7);
                     ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;

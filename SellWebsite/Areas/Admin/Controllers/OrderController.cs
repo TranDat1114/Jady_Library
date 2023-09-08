@@ -21,7 +21,8 @@ namespace SellWebsite.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<OrderHeader> orderHeaders = _unitOfWork.OrderHeader.GetAll().ToList();
+            return View(orderHeaders);
         }
 
         public IActionResult Details(int idOrder)
@@ -54,6 +55,12 @@ namespace SellWebsite.Areas.Admin.Controllers
         public IActionResult RejectedOderStatus(int idOrder)
         {
             _unitOfWork.OrderHeader.UpdateStatus(idOrder, SD.PaymentRejected);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Update successful" }); ;
+        }
+        public IActionResult ReturnedOderStatus(int idOrder)
+        {
+            _unitOfWork.OrderHeader.UpdateStatus(idOrder, SD.StatusReturned);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Update successful" }); ;
         }

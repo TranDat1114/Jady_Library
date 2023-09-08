@@ -21,7 +21,7 @@ namespace SellWebsite.Models.Models
         [DataType(DataType.Date)]
         public DateTime ReturnTime { get; set; }
 
-        public bool IsReturn { get; set; } = false;
+        //public bool IsReturn { get; set; } = false;
         //public double OrderTotal { get; set; }
         //public double Discount { get; set; }
 

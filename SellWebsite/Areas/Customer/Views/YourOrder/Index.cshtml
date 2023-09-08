@@ -33,9 +33,6 @@
                         ReturnTime
                     </th>
                     <th class="text-nowrap">
-                        IsReturn
-                    </th>
-                    <th class="text-nowrap">
                         Detail
                     </th>
                     <th class="text-nowrap">
@@ -61,9 +58,6 @@
                         </td>
                         <td>
                             @item.ReturnTime
-                        </td>
-                        <td>
-                            @item.IsReturn
                         </td>
                         <td>
                             <a class="btn btn-primary text-nowrap w-100" asp-area="Customer" asp-controller="YourOrder" asp-action="Details" asp-route-idOrder="@item.OrderHeaderId">Detail</a>

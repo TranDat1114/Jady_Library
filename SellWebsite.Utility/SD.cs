@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SellWebsite.Utility
+﻿namespace SellWebsite.Utility
 {
     //Tạo các role ở đây -> tiện cho việc xử lý tạo vào so sánh phân quyền,...
     public static class SD
@@ -20,6 +14,7 @@ namespace SellWebsite.Utility
         public const string StatusShipped = "Shipped";
         public const string StatusCancelled = "Cancelled";
         public const string StatusRefunded = "Refunded";
+        public const string StatusReturned = "Returned";
 
         public const string PaypalVERIFIED = "VERIFIED";
 
