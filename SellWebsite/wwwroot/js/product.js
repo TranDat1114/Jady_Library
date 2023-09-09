@@ -19,7 +19,6 @@ function loadDataTable() {
             { data: 'Author' },
             { data: 'Description', "width": "50%" },
             { data: 'CreatedDate' },
-            { data: 'UpdatedDate' },
              {
                 data: 'Categories',
                 "render": function (data) {

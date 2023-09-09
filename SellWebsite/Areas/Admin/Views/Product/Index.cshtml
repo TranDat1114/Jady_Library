@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <h2 class="text-primary">
-                Product List
+                Book List
             </h2>
         </div>
-        <div class="col-12 col-md-6 text-end">
+        <div class="col-12 col-md-6 text-md-end">
             <a class="btn btn-primary" asp-controller="Product" asp-action="Upsert">
-                <i class="bi bi-plus-circle"></i> Create new Product
+                <i class="bi bi-plus-circle"></i> Create new Book
             </a>
         </div>
     </div>
@@ -18,26 +18,24 @@
             <thead>
                 <tr>
                     <th class="text-nowrap">
-                        Product ID
+                        Book ID
                     </th>
                     <th class="text-nowrap">
-                        Product Image
+                        Book Image
                     </th>
                     <th class="text-nowrap">
-                        Product Title
+                        Book Title
                     </th>
                     <th class="text-nowrap">
-                        Product Author
+                        Book Author
                     </th>
                     <th class="text-nowrap">
-                        Product Description
+                        Book Description
                     </th>
                     <th class="text-nowrap">
                         Created Date
                     </th>
-                    <th class="text-nowrap">
-                        Updated Date
-                    </th>
+                  
                     <th class="text-nowrap">
                         Categories
                     </th>
@@ -52,73 +50,6 @@
             </thead>
             <tbody>
 
-                @*Sử dụng ajax cho tiện*@
-                @* @foreach (var item in Model.OrderBy(o => o.Id))
-                {
-                <tr style="height:100px;" class="align-middle">
-                <td>
-                @item.Id
-                </td>
-                <td>
-                @item.Title
-                </td>
-                <td>
-                @item.Author
-                </td>
-                <td>
-                @item.PostsBy
-                </td>
-                <td style="max-width:20ch;" class="text-truncate">
-                @item.Description
-                </td>
-
-                <td>
-                @item.License
-                </td>
-                <td>
-                @item.PreviewUrl
-                </td>
-                <td>
-                @item.DownloadUrl
-                </td>
-                <td>
-                @item.CreatedDate
-                </td>
-                <td>
-                @item.UpdatedDate
-                </td>
-                <td>
-                @item.DownloadCount
-                </td>
-                <td>
-                @item.Credits
-                </td>
-
-
-                <td style="width:100ch">
-                @foreach (var category in item.Categories)
-                {
-                <div>
-                @category.NameEnglish
-                </div>
-                }
-                </td>
-
-                <td>
-                <img style="width:100px; object-fit:contain; object-position:center" class="m-auto" src="@item.Image"
-                alt="CategoryIMG" />
-                </td>
-
-                <td>
-                <a class="btn btn-primary text-nowrap" asp-controller="Product" asp-action="Upsert"
-                asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i> Edit</a>
-                </td>
-                <td>
-                <a class="btn btn-danger text-nowrap" asp-controller="Product" asp-action="Delete"
-                asp-route-id="@item.Id"><i class="bi bi-trash3-fill"></i> Delete</a>
-                </td>
-                </tr>
-                }*@
             </tbody>
         </table>
     </div>
