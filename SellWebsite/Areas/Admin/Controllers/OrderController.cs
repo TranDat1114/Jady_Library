@@ -50,21 +50,28 @@ namespace SellWebsite.Areas.Admin.Controllers
         {
             _unitOfWork.OrderHeader.UpdateStatus(idOrder, SD.StatusApproved);
             _unitOfWork.Save();
-            return Json(new { success = true, message = "Update successful" }); ;
+            // return Json(new { success = true, message = "Update successful" }); 
+            TempData["success"] = $"Your extend request successfully";
+
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult RejectedOderStatus(int idOrder)
         {
             _unitOfWork.OrderHeader.UpdateStatus(idOrder, SD.PaymentRejected);
             _unitOfWork.Save();
-            return Json(new { success = true, message = "Update successful" }); ;
+            // return Json(new { success = true, message = "Update successful" }); 
+            TempData["success"] = $"Your extend request successfully";
+
+            return RedirectToAction(nameof(Index));
+
         }
         public IActionResult ReturnedOderStatus(int idOrder)
         {
             _unitOfWork.OrderHeader.UpdateStatus(idOrder, SD.StatusReturned);
             _unitOfWork.Save();
-            return Json(new { success = true, message = "Update successful" }); ;
+            TempData["success"] = $"Your extend request successfully";
+            return RedirectToAction(nameof(Index));
         }
-
         #endregion
     }
 }

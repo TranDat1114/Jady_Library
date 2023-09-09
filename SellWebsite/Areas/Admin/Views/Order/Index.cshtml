@@ -76,25 +76,35 @@
                             @item.ReturnTime
                         </td>
                         <td>
-                            <a href='/admin/order/Details?idOrder=@item.OrderHeaderId' class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Details</a>
+                            <a href='/admin/order/Details?idOrder=@item.OrderHeaderId'
+                                class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Details</a>
                         </td>
                         @{
-                            if (item.OrderStatus != SD.StatusReturned)
+                            if(item.OrderStatus !=SD.StatusReturned){
+
+                            if (item.OrderStatus != SD.StatusApproved)
                             {
                                 <td>
-
-                                    <a onClick=Approve('/admin/order/ApproveOderStatus?idOrder =@item.OrderHeaderId') class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Approve</a>
+@* onClick="Approve('/admin/order/ApproveOderStatus?idOrder@(item.OrderHeaderId)')" *@
+                                    <a asp-action="ApproveOderStatus" asp-route-idOrder="@(item.OrderHeaderId)"
+                                        class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Approve</a>
                                 </td>
                                 <td>
-                                    <a onClick=Rejected('/admin/order/RejectedOderStatus?idOrder =@item.OrderHeaderId') class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Reject</a>
+                                    <a asp-action="RejectedOderStatus" asp-route-idOrder="@(item.OrderHeaderId)" 
+                                        class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Reject</a>
                                 </td>
                             }
                             else
                             {
                                 <td></td>
                                 <td>
-                                    <a onClick=Approve('/admin/order/ReturnedOderStatus?idOrder =@item.OrderHeaderId') class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Returned</a>
+                                    <a asp-action="ReturnedOderStatus" asp-route-idOrder="@(item.OrderHeaderId)" 
+                                        class="btn btn-primary text-nowrap w-100"><i class="bi bi-pencil-square"></i> Returned</a>
                                 </td>
+                            }
+                            }else{
+<td></td>
+<td></td>
                             }
                         }
 
@@ -110,6 +120,6 @@
 
 
 @section Scripts{
-    @*    <script src="~/js/orderProduct.js"></script>*@
-    <script src="~/js/orderStatusUpdate.js"></script>
+    @* <script src="~/js/orderProduct.js"></script>*@
+    @* <script src="~/js/orderStatusUpdate.js"></script> *@
 }
