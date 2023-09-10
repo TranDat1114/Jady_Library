@@ -4,7 +4,7 @@
         // Get the search query from the input field
         var searchQuery = $(this).val();
         $("#searchResults").show();
-        $('.search-input-group').css("width", "30rem");
+        $('.search-input-group').css("width", "25rem");
         // Send AJAX request to the server
         $.ajax({
             url: "/Customer/Home/Search", // Replace with your controller and action
