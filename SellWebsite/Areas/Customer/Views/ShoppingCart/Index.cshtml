@@ -1,7 +1,7 @@
 ﻿@using System.Globalization;
 @model ShoppingCartVM
 <div class="container-fluid">
-    <h2>Shopping Cart</h2>
+    <h2>Your Cart</h2>
     <div class="row">
         <div class="col-12 col-md-9 border-end border-2">
             <table class="table tabletable-hover scroll-table">
@@ -29,14 +29,20 @@
                                 <td class="text-center" style="width:250px">
                                     @*nếu là web thì không cộng trừ*@
                                     <div class="input-group">
-                                        <a class="input-group-text text-decoration-none" asp-controller="ShoppingCart" asp-action="Minus" asp-route-cartId="@item.CartId" asp-route-productId="@item.ProductId"><i class="fa-solid fa-minus"></i></a>
-                                        <input class="form-control" asp-for="@item.Quantity" value="@item.Quantity" readonly type="number" />
-                                        <a class="input-group-text text-decoration-none"
-                                           asp-controller="ShoppingCart" asp-action="Plus" asp-route-cartId="@item.CartId" asp-route-productId="@item.ProductId"><i class="fa-solid fa-plus"></i></a>
+                                        <a class="input-group-text text-decoration-none" asp-controller="ShoppingCart"
+                                            asp-action="Minus" asp-route-cartId="@item.CartId"
+                                            asp-route-productId="@item.ProductId"><i class="fa-solid fa-minus"></i></a>
+                                        <input class="form-control" asp-for="@item.Quantity" value="@item.Quantity" readonly
+                                            type="number" />
+                                        <a class="input-group-text text-decoration-none" asp-controller="ShoppingCart"
+                                            asp-action="Plus" asp-route-cartId="@item.CartId"
+                                            asp-route-productId="@item.ProductId"><i class="fa-solid fa-plus"></i></a>
                                     </div>
                                 </td>
 
-                                <td><a class="btn btn-sm btn-outline-danger" asp-controller="ShoppingCart" asp-action="Remove" asp-route-cartId="@item.CartId" asp-route-productId="@item.ProductId"><i class="fa-solid fa-xmark"></i></a></td>
+                                <td><a class="btn btn-sm btn-outline-danger" asp-controller="ShoppingCart" asp-action="Remove"
+                                        asp-route-cartId="@item.CartId" asp-route-productId="@item.ProductId"><i
+                                            class="fa-solid fa-xmark"></i></a></td>
                             </tr>
                         }
                     </tbody>
@@ -44,7 +50,9 @@
                 else
                 {
                     <tr>
-                        <td colspan="4" class="text-center"><h4>0 Product in your cart</h4></td>
+                        <td colspan="4" class="text-center">
+                            <h4>0 Product in your cart</h4>
+                        </td>
                     </tr>
                 }
 
@@ -52,37 +60,36 @@
         </div>
         <div class="col-12 col-md-3">
             <div class="container">
-
-                <div class="row g-3">
-                    <div class="col-12 d-flex justify-content-between">
-                        <h5>Voucher</h5>
-                        <p class="text-dark">Choice 1 <i class="fa-solid fa-circle-info"></i></p>
-                    </div>
-
-                    <div class="col-12">
-                        <button class="btn btn-info w-100"><i class="fa-solid fa-percent"></i> Coupon</button>
-                    </div>
+                @* <div class="row g-3">
+                <div class="col-12 d-flex justify-content-between">
+                <h5>Voucher</h5>
+                <p class="text-dark">Choice 1 <i class="fa-solid fa-circle-info"></i></p>
                 </div>
-                <hr />
+
+                <div class="col-12">
+                <button class="btn btn-info w-100"><i class="fa-solid fa-percent"></i> Coupon</button>
+                </div>
+                </div>
+                <hr /> *@
                 @*Sửa lại khi cần thiết*@
-                <div class="row">
-                    <div class="col-12 d-flex g-3 justify-content-between">
-                        <p class="fw-bold">Provisional price: </p>
+                @* <div class="row">
+                <div class="col-12 d-flex g-3 justify-content-between">
+                <p class="fw-bold">Provisional price: </p>
 
-                    </div>
-                    <div class="col-12 d-flex g-3 justify-content-between">
-                        <p class="fw-bold">Discount: </p>
+                </div>
+                <div class="col-12 d-flex g-3 justify-content-between">
+                <p class="fw-bold">Discount: </p>
 
-                    </div>
-                    <hr />
-                    <div class="col-12 d-flex g-3 justify-content-between">
-                        <p class="fw-bold">Total price: </p>
-
-                    </div>
                 </div>
                 <hr />
+                <div class="col-12 d-flex g-3 justify-content-between">
+                <p class="fw-bold">Total price: </p>
+                </div>
+                </div> *@
+                <hr />
                 <div class="row g-3">
-                    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#checkOutPayment">Purchase</button>
+                    <button class="btn btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#checkOutPayment">Purchase</button>
                 </div>
             </div>
         </div>
@@ -103,23 +110,27 @@
                             <div class="row mb-3">
                                 <div class="col-12 col-md-6">
                                     <label asp-for="OrderHeader.Name" class="form-label">Your Name</label>
-                                    <input asp-for="OrderHeader.Name" type="text" class="form-control" placeholder="Input your name...">
+                                    <input asp-for="OrderHeader.Name" type="text" class="form-control"
+                                        placeholder="Input your name...">
                                     <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label asp-for="OrderHeader.PhoneNumber">Phone Number</label>
-                                    <input class="form-control" type="text" asp-for="OrderHeader.PhoneNumber" placeholder="Input phone number..." />
+                                    <input class="form-control" type="text" asp-for="OrderHeader.PhoneNumber"
+                                        placeholder="Input phone number..." />
                                     <span class="text-danger" asp-validation-for="OrderHeader.PhoneNumber"></span>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-12 col-md-6">
                                     <label asp-for="OrderHeader.CompanyId"></label>
-                                    <select asp-for="OrderHeader.CompanyId" class="form-control" asp-items="@(new SelectList(Model.Companies, nameof(Company.CompanyId), nameof(Company.Name)))"></select>
+                                    <select asp-for="OrderHeader.CompanyId" class="form-control"
+                                        asp-items="@(new SelectList(Model.Companies, nameof(Company.CompanyId), nameof(Company.Name)))"></select>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label asp-for="OrderHeader.Email"></label>
-                                    <input class="form-control" type="text" asp-for="OrderHeader.Email" placeholder="Input Email..." />
+                                    <input class="form-control" type="text" asp-for="OrderHeader.Email"
+                                        placeholder="Input Email..." />
                                     <span class="text-danger" asp-validation-for="OrderHeader.Email"></span>
                                 </div>
                             </div>
@@ -162,7 +173,8 @@
                 <div class="row align-items-center w-100">
                     <div class="col-12 col-md-8">
                         <p class="text-start text-nowrap text-info">
-                            Borrow Time: @DateTime.Now.ToShortDateString() - @DateTime.Now.AddDays(7).ToShortDateString()
+                            Borrow Time: @DateTime.Now.ToShortDateString() -
+                            @DateTime.Now.AddDays(7).ToShortDateString()
                         </p>
                     </div>
                     <div class="col-12 col-md-4 ">

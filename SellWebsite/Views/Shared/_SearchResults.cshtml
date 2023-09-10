@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-6">
                         <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Detail"
-                            asp-route-id="@product?.ProductId">
+                            asp-route-id="@product.ProductId">
                             <div class="row ">
                                 <div class="col-12">
                                     <p class="text-truncate"><strong>@product.Title</strong></p>
@@ -25,11 +25,11 @@
                     </div>
                 </div>
                 <div class="row">
-                   @* <div class="col-12">
-                        <a class="btn btn-outline-dark w-100" asp-action="AddToCart" asp-controller="Home" asp-area="Customer" asp-route-id="@product?.Id">
+                   <div class="col-12">
+                        <a class="btn btn-outline-dark w-100" asp-action="AddToCart" asp-controller="Home" asp-area="Customer" asp-route-id="@product.ProductId">
                             Add to cart
                         </a>
-                    </div>*@
+                    </div>
                 </div>
             </div>
         </li>
