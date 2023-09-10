@@ -24,6 +24,9 @@
                         Product Name
                     </th>
                     <th class="text-nowrap">
+                        Image
+                    </th>
+                    <th class="text-nowrap">
                         Quantity
                     </th>
 
@@ -38,6 +41,10 @@
                         </td>
                         <td>
                             @item.Product.Title
+                        </td>
+                        <td>
+                            <img class="img-table" src="@item.Product.Image" alt="img" />
+                            
                         </td>
                         <td>
                             @item.Count
